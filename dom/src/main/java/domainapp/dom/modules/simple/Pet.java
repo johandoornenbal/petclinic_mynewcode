@@ -38,8 +38,8 @@ import org.apache.isis.applib.util.ObjectContracts;
 
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
-        schema = "simple",
-        table = "SimpleObject"
+        schema = "SIMPLE",
+        table = "Pet"
 )
 @javax.jdo.annotations.DatastoreIdentity(
         strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
@@ -51,20 +51,19 @@ import org.apache.isis.applib.util.ObjectContracts;
         @javax.jdo.annotations.Query(
                 name = "find", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM domainapp.dom.modules.simple.SimpleObject "),
+                        + "FROM domainapp.dom.modules.simple.Pet "),
         @javax.jdo.annotations.Query(
                 name = "findByName", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM domainapp.dom.modules.simple.SimpleObject "
+                        + "FROM domainapp.dom.modules.simple.Pet "
                         + "WHERE name.indexOf(:name) >= 0 ")
 })
-@javax.jdo.annotations.Unique(name="SimpleObject_name_UNQ", members = {"name"})
+@javax.jdo.annotations.Unique(name="Pet_name_UNQ", members = {"name"})
 @DomainObject
 @DomainObjectLayout(
-        bookmarking = BookmarkPolicy.AS_ROOT,
-        cssClassFa = "fa-flag"
+        bookmarking = BookmarkPolicy.AS_ROOT
 )
-public class SimpleObject implements Comparable<SimpleObject> {
+public class Pet implements Comparable<Pet> {
 
 
     //region > identificatiom
@@ -94,8 +93,8 @@ public class SimpleObject implements Comparable<SimpleObject> {
 
     //region > updateName (action)
 
-    public static class UpdateNameDomainEvent extends ActionDomainEvent<SimpleObject> {
-        public UpdateNameDomainEvent(final SimpleObject source, final Identifier identifier, final Object... arguments) {
+    public static class UpdateNameDomainEvent extends ActionDomainEvent<Pet> {
+        public UpdateNameDomainEvent(final Pet source, final Identifier identifier, final Object... arguments) {
             super(source, identifier, arguments);
         }
     }
@@ -103,7 +102,7 @@ public class SimpleObject implements Comparable<SimpleObject> {
     @Action(
             domainEvent = UpdateNameDomainEvent.class
     )
-    public SimpleObject updateName(
+    public Pet updateName(
             @Parameter(maxLength = 40)
             @ParameterLayout(named = "New name")
             final String name) {
@@ -124,7 +123,7 @@ public class SimpleObject implements Comparable<SimpleObject> {
     //region > compareTo
 
     @Override
-    public int compareTo(final SimpleObject other) {
+    public int compareTo(final Pet other) {
         return ObjectContracts.compare(this, other, "name");
     }
 

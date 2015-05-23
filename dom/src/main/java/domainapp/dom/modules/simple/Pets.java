@@ -34,13 +34,13 @@ import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
-@DomainService(repositoryFor = SimpleObject.class)
+@DomainService(repositoryFor = Pet.class)
 @DomainServiceLayout(menuOrder = "10")
-public class SimpleObjects {
+public class Pets {
 
     //region > title
     public TranslatableString title() {
-        return TranslatableString.tr("Simple Objects");
+        return TranslatableString.tr("Pet Objects");
     }
     //endregion
 
@@ -52,8 +52,8 @@ public class SimpleObjects {
             bookmarking = BookmarkPolicy.AS_ROOT
     )
     @MemberOrder(sequence = "1")
-    public List<SimpleObject> listAll() {
-        return container.allInstances(SimpleObject.class);
+    public List<Pet> listAll() {
+        return container.allInstances(Pet.class);
     }
     //endregion
 
@@ -65,21 +65,21 @@ public class SimpleObjects {
             bookmarking = BookmarkPolicy.AS_ROOT
     )
     @MemberOrder(sequence = "2")
-    public List<SimpleObject> findByName(
+    public List<Pet> findByName(
             @ParameterLayout(named="Name")
             final String name
     ) {
         return container.allMatches(
                 new QueryDefault<>(
-                        SimpleObject.class,
+                        Pet.class,
                         "findByName",
                         "name", name));
     }
     //endregion
 
     //region > create (action)
-    public static class CreateDomainEvent extends ActionDomainEvent<SimpleObjects> {
-        public CreateDomainEvent(final SimpleObjects source, final Identifier identifier, final Object... arguments) {
+    public static class CreateDomainEvent extends ActionDomainEvent<Pets> {
+        public CreateDomainEvent(final Pets source, final Identifier identifier, final Object... arguments) {
             super(source, identifier, arguments);
         }
     }
@@ -88,9 +88,9 @@ public class SimpleObjects {
             domainEvent = CreateDomainEvent.class
     )
     @MemberOrder(sequence = "3")
-    public SimpleObject create(
+    public Pet create(
             final @ParameterLayout(named="Name") String name) {
-        final SimpleObject obj = container.newTransientInstance(SimpleObject.class);
+        final Pet obj = container.newTransientInstance(Pet.class);
         obj.setName(name);
         container.persistIfNotAlready(obj);
         return obj;

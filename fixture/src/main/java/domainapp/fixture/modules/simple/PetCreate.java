@@ -20,17 +20,52 @@
 package domainapp.fixture.modules.simple;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
-import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
 
-public class SimpleObjectsTearDown extends FixtureScript {
+import domainapp.dom.modules.simple.Pet;
+import domainapp.dom.modules.simple.Pets;
 
-    @Override
-    protected void execute(ExecutionContext executionContext) {
-        isisJdoSupport.executeUpdate("delete from simple.\"SimpleObject\"");
+public class PetCreate extends FixtureScript {
+
+    //region > name (input)
+    private String name;
+    /**
+     * Name of the object (required)
+     */
+    public String getName() {
+        return name;
     }
 
+    public PetCreate setName(final String name) {
+        this.name = name;
+        return this;
+    }
+    //endregion
+
+
+    //region > pet (output)
+    private Pet pet;
+
+    /**
+     * The created simple object (output).
+     * @return
+     */
+    public Pet getPet() {
+        return pet;
+    }
+    //endregion
+
+    @Override
+    protected void execute(final ExecutionContext ec) {
+
+        String name = checkParam("name", ec, String.class);
+
+        this.pet = wrap(pets).create(name);
+
+        // also make available to UI
+        ec.addResult(this, pet);
+    }
 
     @javax.inject.Inject
-    private IsisJdoSupport isisJdoSupport;
+    private Pets pets;
 
 }

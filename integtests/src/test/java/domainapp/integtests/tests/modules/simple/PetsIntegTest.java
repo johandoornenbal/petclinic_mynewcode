@@ -33,71 +33,71 @@ import org.junit.Test;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
-import domainapp.dom.modules.simple.SimpleObject;
-import domainapp.dom.modules.simple.SimpleObjects;
-import domainapp.fixture.modules.simple.SimpleObjectsTearDown;
-import domainapp.fixture.scenarios.RecreateSimpleObjects;
-import domainapp.integtests.tests.SimpleAppIntegTest;
+import domainapp.dom.modules.simple.Pet;
+import domainapp.dom.modules.simple.Pets;
+import domainapp.fixture.modules.simple.PetsTearDown;
+import domainapp.fixture.scenarios.RecreatePets;
+import domainapp.integtests.tests.PetClinicAppIntegTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SimpleObjectsIntegTest extends SimpleAppIntegTest {
+public class PetsIntegTest extends PetClinicAppIntegTest {
 
     @Inject
     FixtureScripts fixtureScripts;
     @Inject
-    SimpleObjects simpleObjects;
+    Pets pets;
 
-    public static class ListAll extends SimpleObjectsIntegTest {
+    public static class ListAll extends PetsIntegTest {
 
         @Test
         public void happyCase() throws Exception {
 
             // given
-            RecreateSimpleObjects fs = new RecreateSimpleObjects();
+            RecreatePets fs = new RecreatePets();
             fixtureScripts.runFixtureScript(fs, null);
             nextTransaction();
 
             // when
-            final List<SimpleObject> all = wrap(simpleObjects).listAll();
+            final List<Pet> all = wrap(pets).listAll();
 
             // then
-            assertThat(all).hasSize(fs.getSimpleObjects().size());
+            assertThat(all).hasSize(fs.getPets().size());
 
-            SimpleObject simpleObject = wrap(all.get(0));
-            assertThat(simpleObject.getName()).isEqualTo(fs.getSimpleObjects().get(0).getName());
+            Pet pet = wrap(all.get(0));
+            assertThat(pet.getName()).isEqualTo(fs.getPets().get(0).getName());
         }
 
         @Test
         public void whenNone() throws Exception {
 
             // given
-            FixtureScript fs = new SimpleObjectsTearDown();
+            FixtureScript fs = new PetsTearDown();
             fixtureScripts.runFixtureScript(fs, null);
             nextTransaction();
 
             // when
-            final List<SimpleObject> all = wrap(simpleObjects).listAll();
+            final List<Pet> all = wrap(pets).listAll();
 
             // then
             assertThat(all).hasSize(0);
         }
     }
 
-    public static class Create extends SimpleObjectsIntegTest {
+    public static class Create extends PetsIntegTest {
 
         @Test
         public void happyCase() throws Exception {
 
             // given
-            FixtureScript fs = new SimpleObjectsTearDown();
+            FixtureScript fs = new PetsTearDown();
             fixtureScripts.runFixtureScript(fs, null);
             nextTransaction();
 
             // when
-            wrap(simpleObjects).create("Faz");
+            wrap(pets).create("Faz");
 
             // then
-            final List<SimpleObject> all = wrap(simpleObjects).listAll();
+            final List<Pet> all = wrap(pets).listAll();
             assertThat(all).hasSize(1);
         }
 
@@ -105,17 +105,17 @@ public class SimpleObjectsIntegTest extends SimpleAppIntegTest {
         public void whenAlreadyExists() throws Exception {
 
             // given
-            FixtureScript fs = new SimpleObjectsTearDown();
+            FixtureScript fs = new PetsTearDown();
             fixtureScripts.runFixtureScript(fs, null);
             nextTransaction();
-            wrap(simpleObjects).create("Faz");
+            wrap(pets).create("Faz");
             nextTransaction();
 
             // then
             expectedExceptions.expectCause(causalChainContains(SQLIntegrityConstraintViolationException.class));
 
             // when
-            wrap(simpleObjects).create("Faz");
+            wrap(pets).create("Faz");
             nextTransaction();
         }
 

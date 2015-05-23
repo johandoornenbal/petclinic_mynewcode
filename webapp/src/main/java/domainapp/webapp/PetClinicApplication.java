@@ -59,13 +59,13 @@ import de.agilecoders.wicket.themes.markup.html.bootswatch.BootswatchThemeProvid
  *    &lt;filter-class>org.apache.wicket.protocol.http.WicketFilter&lt;/filter-class>
  *    &lt;init-param>
  *      &lt;param-name>applicationClassName&lt;/param-name>
- *      &lt;param-value>webapp.SimpleApplication&lt;/param-value>
+ *      &lt;param-value>webapp.PetClinicApplication&lt;/param-value>
  *    &lt;/init-param>
  * &lt;/filter>
  * </pre>
  * 
  */
-public class SimpleApplication extends IsisWicketApplication {
+public class PetClinicApplication extends IsisWicketApplication {
 
     private static final long serialVersionUID = 1L;
 

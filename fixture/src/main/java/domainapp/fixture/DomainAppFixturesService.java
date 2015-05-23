@@ -30,7 +30,7 @@ import org.apache.isis.applib.fixturescripts.FixtureResult;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
-import domainapp.fixture.scenarios.RecreateSimpleObjects;
+import domainapp.fixture.scenarios.RecreatePets;
 
 /**
  * Enables fixtures to be installed from the application.
@@ -49,7 +49,7 @@ public class DomainAppFixturesService extends FixtureScripts {
 
     @Override
     public FixtureScript default0RunFixtureScript() {
-        return findFixtureScriptFor(RecreateSimpleObjects.class);
+        return findFixtureScriptFor(RecreatePets.class);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class DomainAppFixturesService extends FixtureScripts {
     )
     @MemberOrder(sequence="20")
     public Object recreateObjectsAndReturnFirst() {
-        final List<FixtureResult> run = findFixtureScriptFor(RecreateSimpleObjects.class).run(null);
+        final List<FixtureResult> run = findFixtureScriptFor(RecreatePets.class).run(null);
         return run.get(0).getObject();
     }
 

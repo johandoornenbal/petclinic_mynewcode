@@ -28,38 +28,38 @@ import org.apache.isis.applib.fixturescripts.FixtureScripts;
 import org.apache.isis.applib.services.wrapper.DisabledException;
 import org.apache.isis.applib.services.wrapper.InvalidException;
 
-import domainapp.dom.modules.simple.SimpleObject;
-import domainapp.fixture.scenarios.RecreateSimpleObjects;
-import domainapp.integtests.tests.SimpleAppIntegTest;
+import domainapp.dom.modules.simple.Pet;
+import domainapp.fixture.scenarios.RecreatePets;
+import domainapp.integtests.tests.PetClinicAppIntegTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SimpleObjectIntegTest extends SimpleAppIntegTest {
+public class PetIntegTest extends PetClinicAppIntegTest {
 
     @Inject
     FixtureScripts fixtureScripts;
 
-    RecreateSimpleObjects fs;
-    SimpleObject simpleObjectPojo;
-    SimpleObject simpleObjectWrapped;
+    RecreatePets fs;
+    Pet petPojo;
+    Pet petWrapped;
 
     @Before
     public void setUp() throws Exception {
         // given
-        fs = new RecreateSimpleObjects().setNumber(1);
+        fs = new RecreatePets().setNumber(1);
         fixtureScripts.runFixtureScript(fs, null);
 
-        simpleObjectPojo = fs.getSimpleObjects().get(0);
+        petPojo = fs.getPets().get(0);
 
-        assertThat(simpleObjectPojo).isNotNull();
-        simpleObjectWrapped = wrap(simpleObjectPojo);
+        assertThat(petPojo).isNotNull();
+        petWrapped = wrap(petPojo);
     }
 
-    public static class Name extends SimpleObjectIntegTest {
+    public static class Name extends PetIntegTest {
 
         @Test
         public void accessible() throws Exception {
             // when
-            final String name = simpleObjectWrapped.getName();
+            final String name = petWrapped.getName();
             // then
             assertThat(name).isEqualTo(fs.NAMES.get(0));
         }
@@ -71,20 +71,20 @@ public class SimpleObjectIntegTest extends SimpleAppIntegTest {
             expectedExceptions.expect(DisabledException.class);
 
             // when
-            simpleObjectWrapped.setName("new name");
+            petWrapped.setName("new name");
         }
     }
 
-    public static class UpdateName extends SimpleObjectIntegTest {
+    public static class UpdateName extends PetIntegTest {
 
         @Test
         public void happyCase() throws Exception {
 
             // when
-            simpleObjectWrapped.updateName("new name");
+            petWrapped.updateName("new name");
 
             // then
-            assertThat(simpleObjectWrapped.getName()).isEqualTo("new name");
+            assertThat(petWrapped.getName()).isEqualTo("new name");
         }
 
         @Test
@@ -95,12 +95,12 @@ public class SimpleObjectIntegTest extends SimpleAppIntegTest {
             expectedExceptions.expectMessage("Exclamation mark is not allowed");
 
             // when
-            simpleObjectWrapped.updateName("new name!");
+            petWrapped.updateName("new name!");
         }
     }
 
 
-    public static class Title extends SimpleObjectIntegTest {
+    public static class Title extends PetIntegTest {
 
         @Inject
         DomainObjectContainer container;
@@ -109,10 +109,10 @@ public class SimpleObjectIntegTest extends SimpleAppIntegTest {
         public void interpolatesName() throws Exception {
 
             // given
-            final String name = simpleObjectWrapped.getName();
+            final String name = petWrapped.getName();
 
             // when
-            final String title = container.titleOf(simpleObjectWrapped);
+            final String title = container.titleOf(petWrapped);
 
             // then
             assertThat(title).isEqualTo("Object: " + name);

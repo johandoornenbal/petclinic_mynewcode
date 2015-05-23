@@ -16,35 +16,21 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package domainapp.dom.app.homepage;
 
-import java.util.List;
+package domainapp.fixture.modules.simple;
 
-import org.apache.isis.applib.annotation.ViewModel;
+import org.apache.isis.applib.fixturescripts.FixtureScript;
+import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
 
-import domainapp.dom.modules.simple.Pet;
-import domainapp.dom.modules.simple.Pets;
+public class PetsTearDown extends FixtureScript {
 
-@ViewModel
-public class HomePageViewModel {
-
-    //region > title
-    public String title() {
-        return getObjects().size() + " objects";
+    @Override
+    protected void execute(ExecutionContext executionContext) {
+        isisJdoSupport.executeUpdate("delete from simple.\"Pet\"");
     }
-    //endregion
 
-    //region > object (collection)
-    @org.apache.isis.applib.annotation.HomePage
-    public List<Pet> getObjects() {
-        return pets.listAll();
-    }
-    //endregion
-
-    //region > injected services
 
     @javax.inject.Inject
-    Pets pets;
+    private IsisJdoSupport isisJdoSupport;
 
-    //endregion
 }

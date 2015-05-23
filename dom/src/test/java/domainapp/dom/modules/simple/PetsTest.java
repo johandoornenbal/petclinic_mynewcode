@@ -33,7 +33,7 @@ import org.apache.isis.core.unittestsupport.jmocking.JUnitRuleMockery2.Mode;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SimpleObjectsTest {
+public class PetsTest {
 
     @Rule
     public JUnitRuleMockery2 context = JUnitRuleMockery2.createFor(Mode.INTERFACES_AND_CLASSES);
@@ -41,61 +41,61 @@ public class SimpleObjectsTest {
     @Mock
     DomainObjectContainer mockContainer;
     
-    SimpleObjects simpleObjects;
+    Pets pets;
 
     @Before
     public void setUp() throws Exception {
-        simpleObjects = new SimpleObjects();
-        simpleObjects.container = mockContainer;
+        pets = new Pets();
+        pets.container = mockContainer;
     }
 
-    public static class Create extends SimpleObjectsTest {
+    public static class Create extends PetsTest {
 
         @Test
         public void happyCase() throws Exception {
 
             // given
-            final SimpleObject simpleObject = new SimpleObject();
+            final Pet pet = new Pet();
 
             final Sequence seq = context.sequence("create");
             context.checking(new Expectations() {
                 {
-                    oneOf(mockContainer).newTransientInstance(SimpleObject.class);
+                    oneOf(mockContainer).newTransientInstance(Pet.class);
                     inSequence(seq);
-                    will(returnValue(simpleObject));
+                    will(returnValue(pet));
 
-                    oneOf(mockContainer).persistIfNotAlready(simpleObject);
+                    oneOf(mockContainer).persistIfNotAlready(pet);
                     inSequence(seq);
                 }
             });
 
             // when
-            final SimpleObject obj = simpleObjects.create("Foobar");
+            final Pet obj = pets.create("Foobar");
 
             // then
-            assertThat(obj).isEqualTo(simpleObject);
+            assertThat(obj).isEqualTo(pet);
             assertThat(obj.getName()).isEqualTo("Foobar");
         }
 
     }
 
-    public static class ListAll extends SimpleObjectsTest {
+    public static class ListAll extends PetsTest {
 
         @Test
         public void happyCase() throws Exception {
 
             // given
-            final List<SimpleObject> all = Lists.newArrayList();
+            final List<Pet> all = Lists.newArrayList();
 
             context.checking(new Expectations() {
                 {
-                    oneOf(mockContainer).allInstances(SimpleObject.class);
+                    oneOf(mockContainer).allInstances(Pet.class);
                     will(returnValue(all));
                 }
             });
 
             // when
-            final List<SimpleObject> list = simpleObjects.listAll();
+            final List<Pet> list = pets.listAll();
 
             // then
             assertThat(list).isEqualTo(all);
