@@ -16,35 +16,56 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package domainapp.dom.app.homepage;
 
-import java.util.List;
+package domainapp.fixture.modules.petclinic;
 
-import org.apache.isis.applib.annotation.ViewModel;
+import org.apache.isis.applib.fixturescripts.FixtureScript;
 
 import domainapp.dom.modules.petclinic.Pet;
 import domainapp.dom.modules.petclinic.Pets;
 
-@ViewModel
-public class HomePageViewModel {
+public class PetCreate extends FixtureScript {
 
-    //region > title
-    public String title() {
-        return getObjects().size() + " pets";
+    //region > name (input)
+    private String name;
+    /**
+     * Name of the object (required)
+     */
+    public String getName() {
+        return name;
+    }
+
+    public PetCreate setName(final String name) {
+        this.name = name;
+        return this;
     }
     //endregion
 
-    //region > object (collection)
-    @org.apache.isis.applib.annotation.HomePage
-    public List<Pet> getObjects() {
-        return pets.listAll();
+
+    //region > pet (output)
+    private Pet pet;
+
+    /**
+     * The created petclinic object (output).
+     * @return
+     */
+    public Pet getPet() {
+        return pet;
     }
     //endregion
 
-    //region > injected services
+    @Override
+    protected void execute(final ExecutionContext ec) {
+
+        String name = checkParam("name", ec, String.class);
+
+        this.pet = wrap(pets).create(name);
+
+        // also make available to UI
+        ec.addResult(this, pet);
+    }
 
     @javax.inject.Inject
-    Pets pets;
+    private Pets pets;
 
-    //endregion
 }

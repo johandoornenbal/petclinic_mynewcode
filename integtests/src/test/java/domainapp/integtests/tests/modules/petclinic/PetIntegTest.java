@@ -16,7 +16,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package domainapp.integtests.tests.modules.simple;
+package domainapp.integtests.tests.modules.petclinic;
 
 import javax.inject.Inject;
 
@@ -28,7 +28,7 @@ import org.apache.isis.applib.fixturescripts.FixtureScripts;
 import org.apache.isis.applib.services.wrapper.DisabledException;
 import org.apache.isis.applib.services.wrapper.InvalidException;
 
-import domainapp.dom.modules.simple.Pet;
+import domainapp.dom.modules.petclinic.Pet;
 import domainapp.fixture.scenarios.RecreatePets;
 import domainapp.integtests.tests.PetClinicAppIntegTest;
 import static org.assertj.core.api.Assertions.assertThat;

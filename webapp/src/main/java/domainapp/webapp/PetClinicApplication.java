@@ -128,11 +128,11 @@ public class PetClinicApplication extends IsisWicketApplication {
         final Module overrides = new AbstractModule() {
             @Override
             protected void configure() {
-                bind(String.class).annotatedWith(Names.named("applicationName")).toInstance("Simple App");
+                bind(String.class).annotatedWith(Names.named("applicationName")).toInstance("PetClinic App");
                 bind(String.class).annotatedWith(Names.named("applicationCss")).toInstance("css/application.css");
                 bind(String.class).annotatedWith(Names.named("applicationJs")).toInstance("scripts/application.js");
                 bind(String.class).annotatedWith(Names.named("welcomeMessage")).toInstance(readLines(getClass(), "welcome.html"));
-                bind(String.class).annotatedWith(Names.named("aboutMessage")).toInstance("Simple App");
+                bind(String.class).annotatedWith(Names.named("aboutMessage")).toInstance("PetClinic App");
                 bind(InputStream.class).annotatedWith(Names.named("metaInfManifest")).toProvider(Providers.of(getServletContext().getResourceAsStream("/META-INF/MANIFEST.MF")));
             }
         };
@@ -146,7 +146,7 @@ public class PetClinicApplication extends IsisWicketApplication {
             final String aboutText = Joiner.on("\n").join(readLines);
             return aboutText;
         } catch (IOException e) {
-            return "This is a simple app";
+            return "This is a petclinic app";
         }
     }
 

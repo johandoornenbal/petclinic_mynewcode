@@ -16,7 +16,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package domainapp.integtests.tests.modules.simple;
+package domainapp.integtests.tests.modules.petclinic;
 
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
@@ -33,9 +33,9 @@ import org.junit.Test;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
-import domainapp.dom.modules.simple.Pet;
-import domainapp.dom.modules.simple.Pets;
-import domainapp.fixture.modules.simple.PetsTearDown;
+import domainapp.dom.modules.petclinic.Pet;
+import domainapp.dom.modules.petclinic.Pets;
+import domainapp.fixture.modules.petclinic.PetsTearDown;
 import domainapp.fixture.scenarios.RecreatePets;
 import domainapp.integtests.tests.PetClinicAppIntegTest;
 import static org.assertj.core.api.Assertions.assertThat;

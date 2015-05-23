@@ -17,55 +17,20 @@
  *  under the License.
  */
 
-package domainapp.fixture.modules.simple;
+package domainapp.fixture.modules.petclinic;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
+import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
 
-import domainapp.dom.modules.simple.Pet;
-import domainapp.dom.modules.simple.Pets;
-
-public class PetCreate extends FixtureScript {
-
-    //region > name (input)
-    private String name;
-    /**
-     * Name of the object (required)
-     */
-    public String getName() {
-        return name;
-    }
-
-    public PetCreate setName(final String name) {
-        this.name = name;
-        return this;
-    }
-    //endregion
-
-
-    //region > pet (output)
-    private Pet pet;
-
-    /**
-     * The created simple object (output).
-     * @return
-     */
-    public Pet getPet() {
-        return pet;
-    }
-    //endregion
+public class PetsTearDown extends FixtureScript {
 
     @Override
-    protected void execute(final ExecutionContext ec) {
-
-        String name = checkParam("name", ec, String.class);
-
-        this.pet = wrap(pets).create(name);
-
-        // also make available to UI
-        ec.addResult(this, pet);
+    protected void execute(ExecutionContext executionContext) {
+        isisJdoSupport.executeUpdate("delete from petclinic.\"Pet\"");
     }
 
+
     @javax.inject.Inject
-    private Pets pets;
+    private IsisJdoSupport isisJdoSupport;
 
 }

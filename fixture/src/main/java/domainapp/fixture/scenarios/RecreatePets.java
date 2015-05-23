@@ -27,9 +27,9 @@ import com.google.common.collect.Lists;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 
-import domainapp.dom.modules.simple.Pet;
-import domainapp.fixture.modules.simple.PetCreate;
-import domainapp.fixture.modules.simple.PetsTearDown;
+import domainapp.dom.modules.petclinic.Pet;
+import domainapp.fixture.modules.petclinic.PetCreate;
+import domainapp.fixture.modules.petclinic.PetsTearDown;
 
 public class RecreatePets extends FixtureScript {
 
