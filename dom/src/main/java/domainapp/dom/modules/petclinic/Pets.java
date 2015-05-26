@@ -28,6 +28,8 @@ import org.apache.isis.applib.annotation.BookmarkPolicy;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Optionality;
+import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.query.QueryDefault;
@@ -90,10 +92,12 @@ public class Pets {
     @MemberOrder(sequence = "3")
     public Pet create(
             final @ParameterLayout(named="Name") String name,
-            final @ParameterLayout(named="Species") PetSpecies petSpecies) {
+            final @ParameterLayout(named="Species") PetSpecies petSpecies,
+            final @ParameterLayout(named="Pet Owner") @Parameter(optionality = Optionality.OPTIONAL) PetOwner petOwner) {
         final Pet obj = container.newTransientInstance(Pet.class);
         obj.setName(name);
         obj.setSpecies(petSpecies);
+        obj.setPetOwner(petOwner);
         container.persistIfNotAlready(obj);
         return obj;
     }

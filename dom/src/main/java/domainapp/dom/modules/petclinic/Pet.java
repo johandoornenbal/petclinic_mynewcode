@@ -115,6 +115,22 @@ public class Pet implements Comparable<Pet> {
 
     // endregion
 
+    //region > petOwner (property)
+
+    private PetOwner petOwner;
+
+    @MemberOrder(sequence = "3")
+    @Column(name = "ownerId", allowsNull = "true")
+    public PetOwner getPetOwner() {
+        return petOwner;
+    }
+
+    public void setPetOwner(final PetOwner petOwner) {
+        this.petOwner = petOwner;
+    }
+
+    //endregion
+
     //region > updateName (action)
 
     public static class UpdateNameDomainEvent extends ActionDomainEvent<Pet> {

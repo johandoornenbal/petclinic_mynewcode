@@ -20,6 +20,8 @@
 package domainapp.fixture.modules.petclinic;
 
 import domainapp.dom.modules.petclinic.Pet;
+import domainapp.dom.modules.petclinic.PetOwner;
+import domainapp.dom.modules.petclinic.PetOwners;
 import domainapp.dom.modules.petclinic.PetSpecies;
 import domainapp.dom.modules.petclinic.Pets;
 import domainapp.fixture.PetClinicAbstractFixture;
@@ -33,15 +35,23 @@ public class PetFixture extends PetClinicAbstractFixture {
     @Override protected void execute(final ExecutionContext ec) {
 
         deleteFrom(Pet.class);
+        deleteFrom(PetOwner.class);
 
-        create(ec, "Bello", PetSpecies.DOG);
-        create(ec, "Hector", PetSpecies.DOG);
-        create(ec, "Tweety", PetSpecies.BIRD);
+        create(ec, "Bello", PetSpecies.DOG, "Bill", "Gates");
+        create(ec, "Hector", PetSpecies.CAT, "Linus", "Torvalds");
+        create(ec, "Tweety", PetSpecies.BIRD, "Mark", "Zuckerberg");
 
     }
 
-    private void create(final ExecutionContext ec, final String name, final PetSpecies species) {
-        ec.addResult(this, pets.create(name, species));
+    private void create(
+            final ExecutionContext ec,
+            final String name,
+            final PetSpecies species,
+            final String firstName,
+            final String lastName) {
+        final PetOwner owner = petOwners.addOwner(firstName, lastName);
+        final Pet pet = pets.create(name, species, owner);
+        ec.addResult(this, pet);
     }
 
     // //////////////////////////////////////
@@ -50,5 +60,8 @@ public class PetFixture extends PetClinicAbstractFixture {
 
     @javax.inject.Inject
     private Pets pets;
+
+    @javax.inject.Inject
+    private PetOwners petOwners;
 
 }

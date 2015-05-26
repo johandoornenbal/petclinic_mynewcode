@@ -30,7 +30,7 @@ public class PetTest {
         pet = new Pet();
     }
 
-    public static class Name extends PetTest {
+    public static class TestName extends PetTest {
 
         @Test
         public void happyCase() throws Exception {

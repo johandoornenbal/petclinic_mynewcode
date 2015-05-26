@@ -97,7 +97,7 @@ public class PetsIntegTest extends PetClinicIntegTest {
 
             // given
             // when
-            wrap(pets).create("Pookie", PetSpecies.CAT);
+            wrap(pets).create("Pookie", PetSpecies.CAT, null);
 
             // then
             final List<Pet> all = wrap(pets).listAll();
@@ -114,7 +114,7 @@ public class PetsIntegTest extends PetClinicIntegTest {
             expectedException.expectCause(causalChainContains(SQLIntegrityConstraintViolationException.class));
 
             // when
-            wrap(pets).create("Bello", PetSpecies.DOG);
+            wrap(pets).create("Bello", PetSpecies.DOG, null);
             nextTransaction();
         }
 

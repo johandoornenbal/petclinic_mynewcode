@@ -70,7 +70,7 @@ public class PetsTest {
             });
 
             // when
-            final Pet obj = pets.create("Foobar", PetSpecies.DOG);
+            final Pet obj = pets.create("Foobar", PetSpecies.DOG, null);
 
             // then
             assertThat(obj).isEqualTo(pet);
