@@ -63,7 +63,7 @@ import static org.apache.isis.applib.util.Enums.enumToCamelCase;
                         + "WHERE name.indexOf(:name) >= 0 ")
 })
 @javax.jdo.annotations.Unique(name="Pet_name_UNQ", members = {"name"})
-@DomainObject
+@DomainObject(autoCompleteAction = "findByName", autoCompleteRepository = Pets.class)
 @DomainObjectLayout(
         bookmarking = BookmarkPolicy.AS_ROOT
 )
@@ -72,7 +72,7 @@ public class Pet implements Comparable<Pet> {
 
     //region > identificatiom
     public TranslatableString title() {
-        return TranslatableString.tr("Object: {name}", "name", getName());
+        return TranslatableString.tr("{name}", "name", getName());
     }
     //endregion
 

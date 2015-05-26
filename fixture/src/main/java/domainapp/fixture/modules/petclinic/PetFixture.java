@@ -24,6 +24,7 @@ import domainapp.dom.modules.petclinic.PetOwner;
 import domainapp.dom.modules.petclinic.PetOwners;
 import domainapp.dom.modules.petclinic.PetSpecies;
 import domainapp.dom.modules.petclinic.Pets;
+import domainapp.dom.modules.petclinic.Visit;
 import domainapp.fixture.PetClinicAbstractFixture;
 
 public class PetFixture extends PetClinicAbstractFixture {
@@ -34,8 +35,10 @@ public class PetFixture extends PetClinicAbstractFixture {
 
     @Override protected void execute(final ExecutionContext ec) {
 
+        deleteFrom(Visit.class);
         deleteFrom(Pet.class);
         deleteFrom(PetOwner.class);
+
 
         create(ec, "Bello", PetSpecies.DOG, "Bill", "Gates");
         create(ec, "Hector", PetSpecies.CAT, "Linus", "Torvalds");
