@@ -160,6 +160,18 @@ public class Pet implements Comparable<Pet> {
 
     //endregion
 
+    //region > changeOwner (action)
+    @MemberOrder(sequence = "1")
+    public Pet changeOwner(final @ParameterLayout(named = "New Pet Owner") PetOwner newPetOwner) {
+        setPetOwner(newPetOwner);
+        return this;
+    }
+
+    public String validateChangeOwner(final PetOwner newPetOwner) {
+        return newPetOwner == getPetOwner() ? "Already the owner" : null;
+    }
+    //endregion
+
     //region > compareTo
 
     @Override

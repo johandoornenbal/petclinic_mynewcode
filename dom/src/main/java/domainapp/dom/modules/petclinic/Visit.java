@@ -1,5 +1,6 @@
 package domainapp.dom.modules.petclinic;
 
+import javax.inject.Inject;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.DatastoreIdentity;
 import javax.jdo.annotations.IdGeneratorStrategy;
@@ -12,10 +13,13 @@ import javax.jdo.annotations.VersionStrategy;
 import com.google.common.collect.ComparisonChain;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.PropertyLayout;
 import org.apache.isis.applib.annotation.Title;
+import org.apache.isis.applib.services.clock.ClockService;
 
 @PersistenceCapable(
         identityType = IdentityType.DATASTORE,
@@ -89,6 +93,23 @@ public class Visit implements Comparable<Visit> {
     }
     //endregion
 
+    //region > checkout (action)
+    @MemberOrder(sequence = "1")
+    public Visit checkout(final @ParameterLayout(named = "Checkout note") String note) {
+        addNote(note);
+        setCheckOutTime(clockService.nowAsDateTime());
+        return this;
+    }
+    //endregion
+
+    //region > addNote (action)
+    public Visit addNote(final @ParameterLayout(named = "Note") String note) {
+        final String currentNote = getNotes() == null ? "" : getNotes().concat("\n");
+        setNotes(currentNote.concat(String.format("%s: %s", LocalDateTime.now().toString("yyyy-MM-dd HH:MM"), note)));
+        return this;
+    }
+    //endregion
+
     @Override
     public int compareTo(Visit o) {
         return ComparisonChain.start()
@@ -96,5 +117,8 @@ public class Visit implements Comparable<Visit> {
                 .compare(getCheckInTime(), o.getCheckInTime())
                 .result();
     }
+
+    @Inject
+    private ClockService clockService;
 
 }

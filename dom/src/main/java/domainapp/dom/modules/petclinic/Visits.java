@@ -39,7 +39,7 @@ public class Visits {
         final Visit obj = container.newTransientInstance(Visit.class);
         obj.setPet(pet);
         obj.setCheckInTime(DateTime.now()) ;
-        obj.setNotes(notes);
+        obj.addNote(notes);
         container.persistIfNotAlready(obj);
         return obj;
     }
