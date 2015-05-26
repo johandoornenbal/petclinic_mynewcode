@@ -33,7 +33,9 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.Property;
+import org.apache.isis.applib.annotation.PropertyLayout;
 import org.apache.isis.applib.annotation.Title;
+import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.util.ObjectContracts;
@@ -121,6 +123,7 @@ public class Pet implements Comparable<Pet> {
 
     @MemberOrder(sequence = "3")
     @Column(name = "ownerId", allowsNull = "true")
+    @PropertyLayout(hidden = Where.REFERENCES_PARENT)
     public PetOwner getPetOwner() {
         return petOwner;
     }
