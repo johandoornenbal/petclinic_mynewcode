@@ -20,6 +20,7 @@
 package domainapp.fixture.modules.petclinic;
 
 import domainapp.dom.modules.petclinic.Pet;
+import domainapp.dom.modules.petclinic.PetSpecies;
 import domainapp.dom.modules.petclinic.Pets;
 import domainapp.fixture.PetClinicAbstractFixture;
 
@@ -33,14 +34,14 @@ public class PetFixture extends PetClinicAbstractFixture {
 
         deleteFrom(Pet.class);
 
-        create(ec, "Bello");
-        create(ec, "Hector");
-        create(ec, "Tweety");
+        create(ec, "Bello", PetSpecies.DOG);
+        create(ec, "Hector", PetSpecies.DOG);
+        create(ec, "Tweety", PetSpecies.BIRD);
 
     }
 
-    private void create(final ExecutionContext ec, final String name) {
-        ec.addResult(this, pets.create(name));
+    private void create(final ExecutionContext ec, final String name, final PetSpecies species) {
+        ec.addResult(this, pets.create(name, species));
     }
 
     // //////////////////////////////////////

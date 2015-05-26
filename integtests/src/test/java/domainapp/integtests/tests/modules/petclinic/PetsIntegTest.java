@@ -35,6 +35,7 @@ import org.junit.rules.ExpectedException;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
 import domainapp.dom.modules.petclinic.Pet;
+import domainapp.dom.modules.petclinic.PetSpecies;
 import domainapp.dom.modules.petclinic.Pets;
 import domainapp.fixture.modules.petclinic.PetFixture;
 import domainapp.fixture.scenarios.PetclinicDemoFixture;
@@ -96,7 +97,7 @@ public class PetsIntegTest extends PetClinicIntegTest {
 
             // given
             // when
-            wrap(pets).create("Pookie");
+            wrap(pets).create("Pookie", PetSpecies.CAT);
 
             // then
             final List<Pet> all = wrap(pets).listAll();
@@ -113,7 +114,7 @@ public class PetsIntegTest extends PetClinicIntegTest {
             expectedException.expectCause(causalChainContains(SQLIntegrityConstraintViolationException.class));
 
             // when
-            wrap(pets).create("Bello");
+            wrap(pets).create("Bello", PetSpecies.DOG);
             nextTransaction();
         }
 

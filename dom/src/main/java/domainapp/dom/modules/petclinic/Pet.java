@@ -18,6 +18,7 @@
  */
 package domainapp.dom.modules.petclinic;
 
+import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
@@ -28,6 +29,7 @@ import org.apache.isis.applib.annotation.BookmarkPolicy;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
+import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.Property;
@@ -35,6 +37,8 @@ import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.util.ObjectContracts;
+
+import static org.apache.isis.applib.util.Enums.enumToCamelCase;
 
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
@@ -72,6 +76,10 @@ public class Pet implements Comparable<Pet> {
     }
     //endregion
 
+    public String iconName() {
+        return enumToCamelCase(getSpecies());
+    }
+
     //region > name (property)
 
     private String name;
@@ -87,6 +95,22 @@ public class Pet implements Comparable<Pet> {
 
     public void setName(final String name) {
         this.name = name;
+    }
+
+    // endregion
+
+    //region > species (property)
+
+    private PetSpecies species;
+
+    @MemberOrder(sequence = "2")
+    @Column(allowsNull = "false")
+    public PetSpecies getSpecies() {
+        return species;
+    }
+
+    public void setSpecies(PetSpecies species) {
+        this.species = species;
     }
 
     // endregion
