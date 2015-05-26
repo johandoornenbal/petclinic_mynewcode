@@ -28,19 +28,22 @@ import com.google.common.base.Throwables;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
-import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
 import domainapp.dom.modules.petclinic.Pet;
 import domainapp.dom.modules.petclinic.Pets;
-import domainapp.fixture.modules.petclinic.PetsTearDown;
-import domainapp.fixture.scenarios.RecreatePets;
-import domainapp.integtests.tests.PetClinicAppIntegTest;
+import domainapp.fixture.modules.petclinic.PetFixture;
+import domainapp.fixture.scenarios.PetclinicDemoFixture;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PetsIntegTest extends PetClinicAppIntegTest {
+public class PetsIntegTest extends PetClinicIntegTest {
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
     @Inject
     FixtureScripts fixtureScripts;
@@ -53,7 +56,7 @@ public class PetsIntegTest extends PetClinicAppIntegTest {
         public void happyCase() throws Exception {
 
             // given
-            RecreatePets fs = new RecreatePets();
+            PetclinicDemoFixture fs = new PetclinicDemoFixture();
             fixtureScripts.runFixtureScript(fs, null);
             nextTransaction();
 
@@ -61,26 +64,29 @@ public class PetsIntegTest extends PetClinicAppIntegTest {
             final List<Pet> all = wrap(pets).listAll();
 
             // then
-            assertThat(all).hasSize(fs.getPets().size());
-
-            Pet pet = wrap(all.get(0));
-            assertThat(pet.getName()).isEqualTo(fs.getPets().get(0).getName());
+            assertThat(all).hasSize(3);
         }
+
+    }
+
+    public static class FindByName extends PetsIntegTest {
 
         @Test
-        public void whenNone() throws Exception {
+        public void happyCase() throws Exception {
 
             // given
-            FixtureScript fs = new PetsTearDown();
+            PetFixture fs = new PetFixture();
             fixtureScripts.runFixtureScript(fs, null);
             nextTransaction();
 
             // when
-            final List<Pet> all = wrap(pets).listAll();
+            final List<Pet> result = pets.findByName("e");
 
             // then
-            assertThat(all).hasSize(0);
+            assertThat(result).hasSize(3);
+
         }
+
     }
 
     public static class Create extends PetsIntegTest {
@@ -89,12 +95,8 @@ public class PetsIntegTest extends PetClinicAppIntegTest {
         public void happyCase() throws Exception {
 
             // given
-            FixtureScript fs = new PetsTearDown();
-            fixtureScripts.runFixtureScript(fs, null);
-            nextTransaction();
-
             // when
-            wrap(pets).create("Faz");
+            wrap(pets).create("Pookie");
 
             // then
             final List<Pet> all = wrap(pets).listAll();
@@ -105,17 +107,13 @@ public class PetsIntegTest extends PetClinicAppIntegTest {
         public void whenAlreadyExists() throws Exception {
 
             // given
-            FixtureScript fs = new PetsTearDown();
-            fixtureScripts.runFixtureScript(fs, null);
-            nextTransaction();
-            wrap(pets).create("Faz");
-            nextTransaction();
+            fixtureScripts.runFixtureScript(new PetFixture(), null);
 
             // then
-            expectedExceptions.expectCause(causalChainContains(SQLIntegrityConstraintViolationException.class));
+            expectedException.expectCause(causalChainContains(SQLIntegrityConstraintViolationException.class));
 
             // when
-            wrap(pets).create("Faz");
+            wrap(pets).create("Bello");
             nextTransaction();
         }
 

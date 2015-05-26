@@ -20,17 +20,12 @@ package domainapp.fixture;
 
 import java.util.List;
 
-import org.apache.isis.applib.annotation.Action;
-import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
-import org.apache.isis.applib.annotation.MemberOrder;
-import org.apache.isis.applib.annotation.RestrictTo;
-import org.apache.isis.applib.fixturescripts.FixtureResult;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
-import domainapp.fixture.scenarios.RecreatePets;
+import domainapp.fixture.scenarios.PetclinicDemoFixture;
 
 /**
  * Enables fixtures to be installed from the application.
@@ -49,7 +44,7 @@ public class DomainAppFixturesService extends FixtureScripts {
 
     @Override
     public FixtureScript default0RunFixtureScript() {
-        return findFixtureScriptFor(RecreatePets.class);
+        return findFixtureScriptFor(PetclinicDemoFixture.class);
     }
 
     @Override
@@ -60,17 +55,17 @@ public class DomainAppFixturesService extends FixtureScripts {
 
     // //////////////////////////////////////
 
-    @Action(
-            restrictTo = RestrictTo.PROTOTYPING
-    )
-    @ActionLayout(
-            cssClassFa="fa fa-refresh"
-    )
-    @MemberOrder(sequence="20")
-    public Object recreateObjectsAndReturnFirst() {
-        final List<FixtureResult> run = findFixtureScriptFor(RecreatePets.class).run(null);
-        return run.get(0).getObject();
-    }
+//    @Action(
+//            restrictTo = RestrictTo.PROTOTYPING
+//    )
+//    @ActionLayout(
+//            cssClassFa="fa fa-refresh"
+//    )
+//    @MemberOrder(sequence="20")
+//    public Object recreateObjectsAndReturnFirst() {
+//        final List<FixtureResult> run = findFixtureScriptFor(PetclinicDemoFixture.class).run(null);
+//        return run.get(0).getObject();
+//    }
 
 
 }

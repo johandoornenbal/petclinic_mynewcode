@@ -16,24 +16,38 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package domainapp.integtests.tests;
 
-import org.junit.BeforeClass;
+package domainapp.fixture.modules.petclinic;
 
-import org.apache.isis.core.integtestsupport.IntegrationTestAbstract;
-import org.apache.isis.core.integtestsupport.scenarios.ScenarioExecutionForIntegration;
+import domainapp.dom.modules.petclinic.Pet;
+import domainapp.dom.modules.petclinic.Pets;
+import domainapp.fixture.PetClinicAbstractFixture;
 
-import domainapp.integtests.bootstrap.PetClinicAppSystemInitializer;
+public class PetFixture extends PetClinicAbstractFixture {
 
-public abstract class PetClinicAppIntegTest extends IntegrationTestAbstract {
-
-    @BeforeClass
-    public static void initClass() {
-        org.apache.log4j.PropertyConfigurator.configure("logging.properties");
-        PetClinicAppSystemInitializer.initIsft();
-
-        // instantiating will install onto ThreadLocal
-        new ScenarioExecutionForIntegration();
+    public PetFixture() {
+        withDiscoverability(Discoverability.DISCOVERABLE);
     }
+
+    @Override protected void execute(final ExecutionContext ec) {
+
+        deleteFrom(Pet.class);
+
+        create(ec, "Bello");
+        create(ec, "Hector");
+        create(ec, "Tweety");
+
+    }
+
+    private void create(final ExecutionContext ec, final String name) {
+        ec.addResult(this, pets.create(name));
+    }
+
+    // //////////////////////////////////////
+    // Injected services
+    // //////////////////////////////////////
+
+    @javax.inject.Inject
+    private Pets pets;
 
 }

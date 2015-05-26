@@ -17,20 +17,16 @@
  *  under the License.
  */
 
-package domainapp.fixture.modules.petclinic;
+package domainapp.fixture.scenarios;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
-import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
 
-public class PetsTearDown extends FixtureScript {
+import domainapp.fixture.modules.petclinic.PetFixture;
 
-    @Override
-    protected void execute(ExecutionContext executionContext) {
-        isisJdoSupport.executeUpdate("delete from petclinic.\"Pet\"");
+public class PetclinicDemoFixture extends FixtureScript {
+
+    @Override protected void execute(final ExecutionContext executionContext) {
+        executionContext.executeChild(this, new PetFixture());
     }
-
-
-    @javax.inject.Inject
-    private IsisJdoSupport isisJdoSupport;
 
 }
