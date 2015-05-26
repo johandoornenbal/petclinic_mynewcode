@@ -18,6 +18,7 @@ import com.google.common.collect.ComparisonChain;
 
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.CollectionLayout;
+import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.RenderType;
 import org.apache.isis.applib.annotation.Title;
@@ -30,6 +31,7 @@ import org.apache.isis.applib.annotation.Title;
 @DatastoreIdentity(strategy = IdGeneratorStrategy.IDENTITY, column = "id")
 @Version(strategy = VersionStrategy.VERSION_NUMBER, column = "version")
 @Unique(name = "Owner_firstName_lastName_UNQ", members = { "firstName", "lastName" })
+@DomainObject(autoCompleteAction = "findByName", autoCompleteRepository = PetOwners.class)
 public class PetOwner implements Comparable<PetOwner> {
 
     //region > First Name (property)

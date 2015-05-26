@@ -9,7 +9,7 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.ParameterLayout;
 
-@DomainService
+@DomainService(repositoryFor = PetOwner.class)
 public class PetOwners {
 
     public String getId() {
