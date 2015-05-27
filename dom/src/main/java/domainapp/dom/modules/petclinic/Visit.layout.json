@@ -19,25 +19,22 @@
         {
             "span": 6,
             "memberGroups": {
-                "Pet information": {
+                "Visit information": {
                     "members": {
-                        "name": {
-                            "actions": {
-                                "updateName": {
-                                    "actionLayout": {
-                                        "position": "BOTTOM"
-                                    }
-                                }
+                        "pet": {},
+                        "checkInTime" : {},
+                        "checkOutTime" : {
+                            "actions" : {
+                                "checkout" : {}
                             }
-                        },
-                        "species" : {}
+                        }
                     }
                 },
-                "Owner" : {
-                    "members" : {
-                        "petOwner" : {
+                "Notes" : {
+                    "members": {
+                        "notes" : {
                             "actions" : {
-                                "changeOwner" : {}
+                                "addNote" : {}
                             }
                         }
                     }
@@ -57,11 +54,5 @@
             "collections": {}
         }
     ],
-    "actions": {
-        "addVisit" : {
-            "named": {
-                "value": "Add a visit to the Pet Clinic"
-            }
-        }
-    }
+    "actions": {}
 }
