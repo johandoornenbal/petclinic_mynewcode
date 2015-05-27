@@ -54,14 +54,18 @@
         },
         {
             "span": 6,
-            "collections": {}
-        }
-    ],
-    "actions": {
-        "addVisit" : {
-            "named": {
-                "value": "Add a visit to the Pet Clinic"
+            "collections": {
+                "visits" : {
+                    "actions": {
+                        "addVisit" : {
+                            "named": {
+                                "value": "Add a visit to the Pet Clinic"
+                            }
+                        }
+                    }
+                }
             }
         }
-    }
+    ],
+    "actions": {}
 }
