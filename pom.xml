@@ -34,13 +34,6 @@
     <properties>
         <isis.version>1.9.0-SNAPSHOT</isis.version>
 
-        <isis-module-devutils.version>1.9.0-SNAPSHOT</isis-module-devutils.version>
-        <isis-module-audit.version>1.9.0-SNAPSHOT</isis-module-audit.version>
-        <isis-module-command.version>1.9.0-SNAPSHOT</isis-module-command.version>
-        <isis-module-publishing.version>1.9.0-SNAPSHOT</isis-module-publishing.version>
-        <isis-module-security.version>1.9.0-SNAPSHOT</isis-module-security.version>
-        <isis-module-sessionlogger.version>1.9.0-SNAPSHOT</isis-module-sessionlogger.version>
-        <isis-wicket-fullcalendar2.version>1.9.0-SNAPSHOT</isis-wicket-fullcalendar2.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -387,37 +380,6 @@
                 <version>1.0-SNAPSHOT</version>
             </dependency>
 
-            <dependency>
-                <groupId>org.isisaddons.module.audit</groupId>
-                <artifactId>isis-module-audit-dom</artifactId>
-                <version>${isis-module-audit.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.isisaddons.module.command</groupId>
-                <artifactId>isis-module-command-dom</artifactId>
-                <version>${isis-module-command.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.isisaddons.module.devutils</groupId>
-                <artifactId>isis-module-devutils-dom</artifactId>
-                <version>${isis-module-devutils.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.isisaddons.module.security</groupId>
-                <artifactId>isis-module-security-dom</artifactId>
-                <version>${isis-module-security.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.isisaddons.module.sessionlogger</groupId>
-                <artifactId>isis-module-sessionlogger-dom</artifactId>
-                <version>${isis-module-sessionlogger.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.isisaddons.wicket.fullcalendar2</groupId>
-                <artifactId>isis-wicket-fullcalendar2-cpt</artifactId>
-                <version>${isis-wicket-fullcalendar2.version}</version>
-            </dependency>
 
         </dependencies>
     </dependencyManagement>
